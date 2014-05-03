@@ -8,14 +8,14 @@ function handler(event)
 {
 	if (event.name == "removeBlacklistedCookies") {
 		var payload = event.message;
-		if (payload.domain == "thestar.com") {
+		if (payload.domain.indexOf("thestar.com") >= 0) {
 			event.target.page.dispatchMessage("removeCookie", { domain: payload.domain, cookie: "syncwall-history=; expires=" + epoch });
 			event.target.page.dispatchMessage("removeCookie", { domain: payload.domain, cookie: "syncwall-sessionid=; expires=" + epoch });
 		}
-		else if (payload.domain == "torontosun.com") {
+		else if (payload.domain.indexOf("torontosun.com") >= 0) {
 			event.target.page.dispatchMessage("removeCookie", { domain: payload.domain, cookie: "pw_meter_tos=; path=/; domain=.torontosun.com; expires=" + epoch });
 		}
-		else if (payload.domain == "theglobeandmail.com") {
+		else if (payload.domain.indexOf("theglobeandmail.com") >= 0) {
 			event.target.page.dispatchMessage("removeCookie", { domain: payload.domain, cookie: "METER_COOKIE=; path=/; domain=.theglobeandmail.com; expires=" + epoch });
 		}
 	}

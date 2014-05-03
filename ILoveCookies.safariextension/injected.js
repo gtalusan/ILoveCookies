@@ -1,4 +1,9 @@
-safari.self.tab.dispatchMessage("removeBlacklistedCookies", { domain:document.domain, cookie:document.cookie });
+setTimeout(
+	function() {
+		safari.self.tab.dispatchMessage("removeBlacklistedCookies", { domain:document.domain, cookie:document.cookie });
+	}
+	, 1000
+);
 
 function handler(event)
 {

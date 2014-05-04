@@ -1,27 +1,33 @@
 <html>
 <head>
+<script src="blacklist.js"></script>
 <script type="text/javascript">
 
 var epoch = "Thu, 01-Jan-1970 00:00:01 GMT";
 
-function handler(event)
+function removeBlacklistedCookies(event)
+{
+	var payload = event.message;
+	var cookies = blacklist[payload.domain];
+	if (cookies == undefined) {
+		return;
+	}
+
+	cookies.forEach(
+		function(cookie) {
+			event.target.page.dispatchMessage("removeCookie", { domain: payload.domain, cookie: cookie + " expires=" + epoch });
+		}
+	);
+}
+
+function message(event)
 {
 	if (event.name == "removeBlacklistedCookies") {
-		var payload = event.message;
-		if (payload.domain.indexOf("thestar.com") >= 0) {
-			event.target.page.dispatchMessage("removeCookie", { domain: payload.domain, cookie: "syncwall-history=; path=/; expires=" + epoch });
-			event.target.page.dispatchMessage("removeCookie", { domain: payload.domain, cookie: "syncwall-sessionid=; path=/; expires=" + epoch });
-		}
-		else if (payload.domain.indexOf("torontosun.com") >= 0) {
-			event.target.page.dispatchMessage("removeCookie", { domain: payload.domain, cookie: "pw_meter_tos=; path=/; domain=.torontosun.com; expires=" + epoch });
-		}
-		else if (payload.domain.indexOf("theglobeandmail.com") >= 0) {
-			event.target.page.dispatchMessage("removeCookie", { domain: payload.domain, cookie: "METER_COOKIE=; path=/; domain=.theglobeandmail.com; expires=" + epoch });
-		}
+		removeBlacklistedCookies(event);
 	}
 }
 
-safari.application.addEventListener("message", handler, false);
+safari.application.addEventListener("message", message, false);
 
 </script>
 </head>

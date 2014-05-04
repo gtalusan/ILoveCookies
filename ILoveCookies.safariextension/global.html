@@ -9,6 +9,8 @@ function removeBlacklistedCookies(event)
 {
 	var payload = event.message;
 	var cookies = blacklist[payload.domain];
+
+	console.log("domain is " + payload.domain);
 	if (cookies == undefined) {
 		return;
 	}

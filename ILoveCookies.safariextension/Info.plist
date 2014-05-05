@@ -45,5 +45,9 @@
 			<string>All</string>
 		</dict>
 	</dict>
+	<key>Update Manifest URL</key>
+	<string>https://raw.githubusercontent.com/gtalusan/ILoveCookies/master/manifest.plist</string>
+	<key>Website</key>
+	<string>http://github.com/gtalusan/ILoveCookies</string>
 </dict>
 </plist>
